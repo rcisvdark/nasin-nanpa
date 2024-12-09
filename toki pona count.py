@@ -37,7 +37,7 @@ def number_to_nasin_nanpa(n: int | float, *, pona: bool = True, ali: bool = Fals
         except IndexError:
             return value
 
-    def process_string(input_string: str, threshold: int) -> str:
+    def account_for_floating_point_precision_errors(input_string: str, threshold: int) -> str:
         if 'ala' in input_string:
             start_index = input_string.index('ala')
         elif '.' in input_string:
@@ -51,11 +51,9 @@ def number_to_nasin_nanpa(n: int | float, *, pona: bool = True, ali: bool = Fals
 
         for pattern in patterns:
             if pattern in substring:
-                # Find where the repeated sequence begins and truncate
                 cut_index = substring.index(pattern)
                 return input_string[:start_index + cut_index]
 
-        # Return the original string if no pattern matches
         return input_string
 
     nimi_nanpa = ''
@@ -103,7 +101,7 @@ def number_to_nasin_nanpa(n: int | float, *, pona: bool = True, ali: bool = Fals
         nimi_nanpa += 'ala ' if nimisuli else '.'
         nimi_nanpa += number_to_nasin_nanpa(transform_float(decimal_part), pona=pona, ali=ali, nimisuli=nimisuli)
 
-    nimi_nanpa = process_string(nimi_nanpa, threshold=5)
+    nimi_nanpa = account_for_floating_point_precision_errors(nimi_nanpa, threshold=5)
 
     return nimi_nanpa.rstrip() if nimi_nanpa else 'ala'
 
