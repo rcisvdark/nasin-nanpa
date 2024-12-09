@@ -204,10 +204,3 @@ def nasin_nanpa_to_number(n: str, *, pona: bool = True) -> float:
         total += decimal_value
 
     return -total if is_negative else total
-
-pona = True
-for i in range(1, 10001):
-    nasin_nanpa = number_to_nasin_nanpa(i, pona=pona, nimisuli=True)
-    number = nasin_nanpa_to_number(nasin_nanpa, pona=pona)
-    print(f'{number}: {nasin_nanpa}')
-    assert number == i
